@@ -23,40 +23,25 @@
 [INFO] Created<sample_instance>: resources/audios/select.ogg
 [INFO] Changed to army-select scene
 [DEBUGGING] id: 1
-[DEBUGGING] armyAmount[1]: 1, usedSpace: 5
 [DEBUGGING] id: 1
-[DEBUGGING] armyAmount[1]: 0, usedSpace: 4
 [DEBUGGING] id: 1
 [DEBUGGING] armyAmount[1]: 1, usedSpace: 5
+[DEBUGGING] id: 1
+[DEBUGGING] id: 1
 [DEBUGGING] id: 0
 [DEBUGGING] armyAmount[0]: 3, usedSpace: 4
 [DEBUGGING] id: 0
 [DEBUGGING] armyAmount[0]: 2, usedSpace: 3
 [DEBUGGING] id: 0
-[DEBUGGING] armyAmount[0]: 3, usedSpace: 4
-[DEBUGGING] id: 0
-[DEBUGGING] armyAmount[0]: 4, usedSpace: 5
-[DEBUGGING] id: 0
-[DEBUGGING] armyAmount[0]: 3, usedSpace: 4
-[DEBUGGING] id: 0
-[DEBUGGING] armyAmount[0]: 2, usedSpace: 3
+[DEBUGGING] armyAmount[0]: 1, usedSpace: 2
 [DEBUGGING] id: 1
-[DEBUGGING] armyAmount[1]: 2, usedSpace: 4
+[DEBUGGING] armyAmount[1]: 2, usedSpace: 3
 [DEBUGGING] id: 1
-[DEBUGGING] armyAmount[1]: 3, usedSpace: 5
+[DEBUGGING] armyAmount[1]: 3, usedSpace: 4
+[DEBUGGING] id: 1
+[DEBUGGING] armyAmount[1]: 4, usedSpace: 5
 [DEBUGGING] id: 1
 [DEBUGGING] id: 1
-[DEBUGGING] id: 1
-[DEBUGGING] armyAmount[1]: 2, usedSpace: 4
-[DEBUGGING] id: 1
-[DEBUGGING] armyAmount[1]: 1, usedSpace: 3
-[DEBUGGING] id: 0
-[DEBUGGING] armyAmount[0]: 3, usedSpace: 4
-[DEBUGGING] id: 0
-[DEBUGGING] armyAmount[0]: 4, usedSpace: 5
-[DEBUGGING] id: 0
-[DEBUGGING] id: 0
-[DEBUGGING] id: 0
 [DEBUGGING] id: -1
 [INFO] stopped audio (sample)
 [INFO] Loaded Resource<image>: resources/images/play/deep-pink.png scaled to 64x64
@@ -85,23 +70,12 @@
 [INFO] Loaded Resource<image>: resources/images/play/explosion-3.png
 [INFO] Loaded Resource<image>: resources/images/play/explosion-4.png
 [INFO] Loaded Resource<image>: resources/images/play/explosion-5.png
-[INFO] Loaded Resource<image>: resources/images/play/dirty-3.png scaled to 64x64
-[INFO] Loaded Resource<image>: resources/images/play/dirty-2.png scaled to 64x64
-[INFO] Loaded Resource<audio>: resources/audios/explosion.wav
-[INFO] Loaded Resource<image>: resources/images/play/warrior.png scaled to 64x64
-[INFO] Loaded Resource<image>: resources/images/play/sword.png scaled to 64x64
-[INFO] Loaded Resource<audio>: resources/audios/missile.wav
 [INFO] Loaded Resource<image>: resources/images/play/dirty-1.png scaled to 64x64
-[INFO] stopped audio (sample)
-[INFO] Loaded Resource<image>: resources/images/win/benjamin-sad.png
-[INFO] Loaded Resource<image>: resources/images/win/dirt.png scaled to 400x100
-[INFO] Loaded Resource<image>: resources/images/win/dirt.png
-[INFO] Loaded Resource<image>: resources/images/win/floor.png
-[INFO] Loaded Resource<audio>: resources/audios/win.wav
-[INFO] Changed to win scene
-[INFO] stopped audio (bgm)
-[INFO] Changed to start-scene scene
+[INFO] Loaded Resource<image>: resources/images/play/dirty-2.png scaled to 64x64
+[INFO] Loaded Resource<image>: resources/images/play/dirty-3.png scaled to 64x64
+[INFO] Loaded Resource<audio>: resources/audios/explosion.wav
 [INFO] Game Terminating...
+[INFO] stopped audio (sample)
 [INFO] Game terminated
 [INFO] Game end
 [INFO] Destroyed Resource<image>: play/explosion-2.png
@@ -119,7 +93,6 @@
 [INFO] Destroyed Resource<image>: stage-select/floor.png
 [INFO] Destroyed Resource<image>: play/bombs.png?64x64
 [INFO] Destroyed Resource<image>: play/bombs.png?175x175
-[INFO] Destroyed Resource<image>: play/warrior.png?64x64
 [INFO] Destroyed Resource<image>: play/bullet-9.png?64x64
 [INFO] Destroyed Resource<image>: stage-select/dirt.png?190x80
 [INFO] Destroyed Resource<image>: lose/benjamin-happy.png
@@ -133,16 +106,11 @@
 [INFO] Destroyed Resource<image>: play/floor.png?90x100
 [INFO] Destroyed Resource<image>: play/floor.png
 [INFO] Destroyed Resource<image>: play/bombs.png?80x80
-[INFO] Destroyed Resource<image>: play/sword.png?64x64
 [INFO] Destroyed Resource<image>: play/target.png?64x64
 [INFO] Destroyed Resource<image>: play/explosion-1.png?64x64
 [INFO] Destroyed Resource<image>: play/explosion-1.png
-[INFO] Destroyed Resource<image>: play/dirty-3.png?64x64
 [INFO] Destroyed Resource<image>: play/dirty-1.png?64x64
-[INFO] Destroyed Resource<image>: win/benjamin-sad.png
-[INFO] Destroyed Resource<image>: win/dirt.png?400x100
-[INFO] Destroyed Resource<image>: win/dirt.png
-[INFO] Destroyed Resource<image>: win/floor.png
+[INFO] Destroyed Resource<image>: play/dirty-3.png?64x64
 [INFO] Destroyed Resource<font>: pirulen.ttf?48
 [INFO] Destroyed Resource<font>: pirulen.ttf?108
 [INFO] Destroyed Resource<font>: pirulen.ttf?30
@@ -155,5 +123,3 @@
 [INFO] Destroyed Resource<audio>: astronomia.ogg
 [INFO] Destroyed Resource<audio>: play.ogg
 [INFO] Destroyed Resource<audio>: explosion.wav
-[INFO] Destroyed Resource<audio>: missile.wav
-[INFO] Destroyed Resource<audio>: win.wav
