@@ -58,6 +58,9 @@ Engine::Point PlayScene::GetClientSize() {
 	return Engine::Point(MapWidth * BlockSize, MapHeight * BlockSize);
 }
 void PlayScene::Initialize() {
+    for (int i = 0; i < WALL_SIZE; i++) {
+        brokenWall[i].clear();
+    }
 	mapState.clear();
 	keyStrokes.clear();
 	ticks = 0;
@@ -126,15 +129,15 @@ void PlayScene::Update(float deltaTime) {
     if (!ArmyGroup->GetObjects().empty()) armyEmpty = false;
     if (armyEmpty) {
         // Release the resources
-        delete TileMapGroup;
-        delete GroundEffectGroup;
-        delete DebugIndicatorGroup;
-        delete BulletGroup;
-        delete DefenseGroup;
-        delete WallGroup;
-        delete ArmyGroup;
-        delete EffectGroup;
-        delete UIGroup;
+        //delete TileMapGroup;
+        //delete GroundEffectGroup;
+        //delete DebugIndicatorGroup;
+        //delete BulletGroup;
+        //delete DefenseGroup;
+        //delete WallGroup;
+        //delete ArmyGroup;
+        //delete EffectGroup;
+        //delete UIGroup;
         Engine::GameEngine::GetInstance().ChangeScene("lose");
     }
     

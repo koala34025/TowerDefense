@@ -4,6 +4,7 @@
 #include "Group.hpp"
 #include "IControl.hpp"
 #include "IObject.hpp"
+#include "LOG.hpp"
 
 namespace Engine {
 	void Group::addObject(bool shouldDelete, IObject* obj) {
@@ -39,9 +40,10 @@ namespace Engine {
 		}
 	}
 	void Group::Draw() const {
+		Engine::LOG() << objects.size();
 		for (auto& it : objects) {
 			if (it.second->Visible)
-				it.second->Draw();
+				it.second->Draw(); // TODO 5
 		}
 	}
 	void Group::OnKeyDown(int keyCode) {
