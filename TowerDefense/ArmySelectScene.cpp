@@ -17,7 +17,7 @@
 void ArmySelectScene::Initialize() {
     // parameter initialization
     // TODO 2 (1/8): modify the totalArmy amount.
-    totalArmy = 1;
+    totalArmy = 2;
     
     // Space status background
     AddNewObject(new Engine::Image("play/sand.png", 1250, 0, 336, 896));
@@ -41,7 +41,8 @@ void ArmySelectScene::Initialize() {
     // set ArmyImage
     ArmyImage[0] = "play/warrior.png";
     // TODO 2 (2/8): Create the bomb image. You can find image in the play/ folder.
-    
+    ArmyImage[1] = "play/bombs.png";
+
     // Add new enemy
     for (int i=0; i<totalArmy; i++) {
         AddNewArmy(i, ArmyImage[i], 1);
@@ -58,7 +59,10 @@ void ArmySelectScene::Initialize() {
     // TODO 1 (7/8): Create the reset button. You can imitate the enter button construction in the Initialize() function.
     // Suggestion of ImageButton's position setting: x(1300), y(600), w(190), h(80).
     // Suggestion of Label position settings: x(1395), y(640).
-
+    btn = new Engine::ImageButton("stage-select/dirt.png", "stage-select/floor.png", 1300, 600, 190, 80);
+    btn->SetOnClickCallback(std::bind(&ArmySelectScene::PlayOnClick, this, BUTTON_RESET, -1, 0));
+    AddNewControlObject(btn);
+    AddNewObject(new Engine::Label("Reset", "pirulen.ttf", 30, 1395, 640, 0, 0, 0, 255, 0.5, 0.5));
     
     // Enter button
     btn = new Engine::ImageButton("stage-select/dirt.png", "stage-select/floor.png", 1300, 750, 190, 80);
@@ -92,6 +96,14 @@ void ArmySelectScene::PlayOnClick(ButtonType type, int id, int spaceCost) {
     }
     else if (type == BUTTON_RESET) {
         // TODO 1 (8/8): Reset the usedSpace and the amount of every army to 0.
+        for (int i = 0; i < totalArmy; i++) {
+            ArmySelectScene::armyAmount[i] = 0;
+            ArmySelectScene::UIArmyAmount[i]->Text = std::to_string(armyAmount[i]);
+            ArmySelectScene::UIArmyAmount[i]->Draw();
+        }
+        ArmySelectScene::usedSpace = 0;
+        ArmySelectScene::UISpaceUsage->Text = "Space: " + std::to_string(usedSpace) + "/" + std::to_string(totalSpace);
+        ArmySelectScene::UISpaceUsage->Draw();
     }
     else if (type == BUTTON_ADD) {
         // TODO 1 (5/8): When the add(+) button is clicked, update the usedSpace and the armyAmount of that army. Make sure that the labels shown on the screen also update.
