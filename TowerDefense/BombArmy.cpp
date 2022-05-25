@@ -110,3 +110,37 @@ void BombArmy::Hit(float damage) {
         getPlayScene()->ArmyGroup->RemoveObject(objectIterator);
     }
 }
+
+// end of bomb army
+
+// start of enemy-4
+
+Enemy4Army::Enemy4Army(float x, float y) :
+    Army("play/enemy-4.png", x, y, 20, 0, 0, 50, 2, 0) {
+    // Move center downward, since we the army head is slightly biased upward.
+    Anchor.y += 8.0f / GetBitmapHeight();
+}
+void Enemy4Army::Update(float deltaTime) {
+    // PlayScene
+    PlayScene* scene = getPlayScene();
+
+    if (isPreview) return;
+
+    reload = coolDown;
+}
+
+// Since the bomb army cannot shoot, the function doesn't need to do anything.
+void Enemy4Army::CreateBullet(Engine::Point pt) {}
+
+// TODO 2 (5/8): You can imitate the hit function in Army class. Notice that the bomb army won't have explosion effect.
+void Enemy4Army::Hit(float damage) {
+    HP -= damage;
+    if (HP <= 0) {
+        // Remove all Defense's reference to target.
+        for (auto& it : lockedDefenses)
+            it->Target = nullptr;
+        getPlayScene()->ArmyGroup->RemoveObject(objectIterator);
+    }
+}
+
+// end of enemy-4

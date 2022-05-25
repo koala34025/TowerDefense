@@ -211,6 +211,8 @@ void PlayScene::OnMouseUp(int button, int mx, int my) {
                     preview = new ArcherArmy(0, 0);
                 else if (remainId == 1)
                     preview = new BombArmy(0, 0);
+                else if (remainId == 2)
+                    preview = new Enemy4Army(0, 0);
 
                 preview->Position = Engine::GameEngine::GetInstance().GetMousePosition();
                 preview->Tint = al_map_rgba(255, 255, 255, 200);
@@ -258,7 +260,7 @@ void PlayScene::OnKeyDown(int keyCode) {
 		UIBtnClicked(1);
 	}
 	else if (keyCode == ALLEGRO_KEY_E) {
-		// Hotkey for ...
+		// Hotkey for Enemy4Army.
 		UIBtnClicked(2);
 	}
 	else if (keyCode == ALLEGRO_KEY_R) {
@@ -358,6 +360,7 @@ void PlayScene::ConstructUI() {
     // TODO 2 (3/8) : Construct the select button for bomb army.
     ConstructButton(0, ArmyImage[0]);
     ConstructButton(1, ArmyImage[1]);
+    ConstructButton(2, ArmyImage[2]);
 }
 void PlayScene::ConstructButton(int id, std::string imageName) {
     ArmyButton* btn;
@@ -383,6 +386,8 @@ void PlayScene::UIBtnClicked(int id) {
         preview = new ArcherArmy(0, 0);
     else if (id == 1)
         preview = new BombArmy(0, 0);
+    else if (id == 2)
+        preview = new Enemy4Army(0, 0);
 
 	if (!preview)
 		return;
