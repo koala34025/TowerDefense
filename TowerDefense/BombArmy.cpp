@@ -13,6 +13,9 @@
 #include "BombArmy.hpp"
 #include "Defense.hpp"
 #include "LOG.hpp"
+#include "ArcherBullet.hpp"
+
+extern ALLEGRO_TIMER* freeze_timer;
 
 //Army(std::string img, float x, float y, float radius, float coolDown, float speed, float hp, int id, float shootRadius);
 BombArmy::BombArmy(float x, float y) :
@@ -29,7 +32,7 @@ void BombArmy::Update(float deltaTime) {
     // position
     int x = static_cast<int>(floor(Position.x / PlayScene::BlockSize));
     int y = static_cast<int>(floor(Position.y / PlayScene::BlockSize));
-    
+
     if (!Target) {
         // Lock closet target
         // Can be improved by Spatial Hash, Quad Tree, ...
@@ -144,3 +147,55 @@ void Enemy4Army::Hit(float damage) {
 }
 
 // end of enemy-4
+
+// start of ice cubes
+
+IceCubesArmy::IceCubesArmy(float x, float y) :
+    Army("play/ice-cubes.png", x, y, 20, 0, 0, 0, 3, 0) {
+    // Move center downward, since we the army head is slightly biased upward.
+    Anchor.y += 8.0f / GetBitmapHeight();
+}
+void IceCubesArmy::Update(float deltaTime) {
+    // PlayScene
+    PlayScene* scene = getPlayScene();
+
+    if (isPreview) return;
+
+    reload = coolDown;
+
+    for (auto& it : lockedDefenses)
+        it->Target = nullptr;
+
+    int x = static_cast<int>(floor(Position.x / PlayScene::BlockSize));
+    int y = static_cast<int>(floor(Position.y / PlayScene::BlockSize));
+    Engine::LOG() << x << " " << y;
+
+    for (auto& it : scene->DefenseGroup->GetObjects()) {
+        int xx = static_cast<int>(floor(it->Position.x / PlayScene::BlockSize));
+        int yy = static_cast<int>(floor(it->Position.y / PlayScene::BlockSize));
+        Engine::LOG() << xx << " " << yy;
+
+        if (abs(xx - x) <= 1 && abs(yy - y) <= 1) {
+            Engine::LOG() << "in";
+            
+            Defense* tgt = dynamic_cast<Defense*>(it);
+            tgt->Enabled = false;
+            al_start_timer(freeze_timer);
+        }
+    }
+
+    // add frozen animation
+    for (int dx = -1; dx <= 1; dx++) {
+        for (int dy = -1; dy <= 1; dy++) {
+            
+        }
+    }
+
+    getPlayScene()->ArmyGroup->RemoveObject(objectIterator);
+}
+
+// Since the bomb army cannot shoot, the function doesn't need to do anything.
+void IceCubesArmy::CreateBullet(Engine::Point pt) {}
+
+// TODO 2 (5/8): You can imitate the hit function in Army class. Notice that the bomb army won't have explosion effect.
+void IceCubesArmy::Hit(float damage) {}

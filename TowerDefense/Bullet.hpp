@@ -20,11 +20,12 @@ protected:
 	float damage;
 	Turret* parent;
 	Enemy* Eparent;
-    Army* armyParent;
+	Army* armyParent;
     Defense* defenseParent;
 	PlayScene* getPlayScene();
     virtual void OnExplode(Army* army);
 public:
+	
     Army* Target = nullptr;
     explicit Bullet(std::string img, float speed, float damage, Engine::Point position, Engine::Point forwardDirection, float rotation, Army* armyParent);
     explicit Bullet(std::string img, float speed, float damage, Engine::Point position, Engine::Point forwardDirection, float rotation, Defense* defenseParent);

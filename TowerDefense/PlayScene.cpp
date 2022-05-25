@@ -49,6 +49,10 @@ const std::vector<Engine::Point> PlayScene::directions = { Engine::Point(-1, 0),
 const int PlayScene::MapWidth = 24, PlayScene::MapHeight = 12;//50;//13;
 const int PlayScene::BlockSize = 64;
 const float PlayScene::DangerTime = 7.61;
+
+ALLEGRO_TIMER* freeze_timer{};
+ALLEGRO_EVENT_QUEUE* queue;
+
 // TODO 4 (2/3): Set the code sequence correctly.
 const std::vector<int> PlayScene::code = {
     ALLEGRO_KEY_UP, ALLEGRO_KEY_UP, ALLEGRO_KEY_DOWN, ALLEGRO_KEY_DOWN, ALLEGRO_KEY_LEFT, ALLEGRO_KEY_RIGHT, ALLEGRO_KEY_ENTER
@@ -58,6 +62,10 @@ Engine::Point PlayScene::GetClientSize() {
 	return Engine::Point(MapWidth * BlockSize, MapHeight * BlockSize);
 }
 void PlayScene::Initialize() {
+    freeze_timer = al_create_timer(1.0f / 60.0f);
+    queue = al_create_event_queue();
+    al_register_event_source(queue, al_get_timer_event_source(freeze_timer));
+
     for (int i = 0; i < WALL_SIZE; i++) {
         brokenWall[i].clear();
     }
@@ -96,6 +104,7 @@ void PlayScene::Initialize() {
         bgmInstance = AudioHelper::PlaySample("play.ogg", true, 0.0);
 }
 void PlayScene::Terminate() {
+    al_destroy_timer(freeze_timer);
     AudioHelper::StopSample(bgmInstance);
     bgmInstance = std::shared_ptr<ALLEGRO_SAMPLE_INSTANCE>();
 	AudioHelper::StopSample(deathBGMInstance);
@@ -121,6 +130,8 @@ void PlayScene::Update(float deltaTime) {
     // Lose
     bool armyEmpty = true;
     for (int i=0; i<totalArmy; i++) {
+        if (i == 3) // skip ice cubes
+            continue;
         if (armyAmount[i] > 0) {
             armyEmpty = false;
             break;
@@ -182,7 +193,7 @@ void PlayScene::OnMouseUp(int button, int mx, int my) {
 	if(x < 0 || x >= MapWidth || y < 0 || y >= MapHeight)
 	    return;
 	if (button & 1) {
-		if (!CheckOccupied(x, y)) {
+		if (!CheckOccupied(x, y) || preview->id == 3) {
 			if (!preview)
 				return;
 
@@ -213,6 +224,8 @@ void PlayScene::OnMouseUp(int button, int mx, int my) {
                     preview = new BombArmy(0, 0);
                 else if (remainId == 2)
                     preview = new Enemy4Army(0, 0);
+                else if (remainId == 3)
+                    preview = new IceCubesArmy(0, 0);
 
                 preview->Position = Engine::GameEngine::GetInstance().GetMousePosition();
                 preview->Tint = al_map_rgba(255, 255, 255, 200);
@@ -224,6 +237,7 @@ void PlayScene::OnMouseUp(int button, int mx, int my) {
 			OnMouseMove(mx, my);
 		}
 		else{
+            Engine::LOG() << "preview->id: " << preview->id;
             Engine::Sprite* sprite;
             GroundEffectGroup->AddNewObject(sprite = new DirtyEffect("play/target-invalid.png", 1, x * BlockSize + BlockSize / 2, y * BlockSize + BlockSize / 2));
             sprite->Rotation = 0;
@@ -264,7 +278,7 @@ void PlayScene::OnKeyDown(int keyCode) {
 		UIBtnClicked(2);
 	}
 	else if (keyCode == ALLEGRO_KEY_R) {
-		// Hotkey for ...
+		// Hotkey for IceCubesArmy
 		UIBtnClicked(3);
 	}
     else if (keyCode == ALLEGRO_KEY_M) {
@@ -361,18 +375,23 @@ void PlayScene::ConstructUI() {
     ConstructButton(0, ArmyImage[0]);
     ConstructButton(1, ArmyImage[1]);
     ConstructButton(2, ArmyImage[2]);
+    ConstructButton(3, ArmyImage[3]);
 }
 void PlayScene::ConstructButton(int id, std::string imageName) {
+    int posid = id; // adjust ice cubes 
+    if (id == 3) 
+        posid += 5;
+
     ArmyButton* btn;
     // Button
     btn = new ArmyButton("play/floor.png", "play/dirt.png",
-        Engine::Sprite(imageName, 175 + 120 * id, BlockSize * MapHeight + 10, 80, 80, 0, 0)
-        , 170 + 120 * id,  BlockSize * MapHeight, 0, id);
+        Engine::Sprite(imageName, 175 + 120 * posid, BlockSize * MapHeight + 10, 80, 80, 0, 0)
+        , 170 + 120 * posid,  BlockSize * MapHeight, 0, id);
     // Reference: Class Member Function Pointer and std::bind.
     btn->SetOnClickCallback(std::bind(&PlayScene::UIBtnClicked, this, id));
     UIGroup->AddNewControlObject(btn);
     // Button Label
-    AddNewObject(UIArmyAmount[id] = new Engine::Label("x" + std::to_string(armyAmount[id]), "pirulen.ttf", 20.5, 230 + 120 * id, BlockSize * MapHeight + 110, 0, 0, 0, 255, 0.5, 0.5));
+    AddNewObject(UIArmyAmount[id] = new Engine::Label("x" + std::to_string(armyAmount[id]), "pirulen.ttf", 20.5, 230 + 120 * posid, BlockSize * MapHeight + 110, 0, 0, 0, 255, 0.5, 0.5));
 }
 
 void PlayScene::UIBtnClicked(int id) {
@@ -381,6 +400,8 @@ void PlayScene::UIBtnClicked(int id) {
 		UIGroup->RemoveObject(preview->GetObjectIterator());
         preview = nullptr;
     }
+
+    if (armyAmount[id] <= 0) return;
     
     if (id == 0)
         preview = new ArcherArmy(0, 0);
@@ -388,6 +409,8 @@ void PlayScene::UIBtnClicked(int id) {
         preview = new BombArmy(0, 0);
     else if (id == 2)
         preview = new Enemy4Army(0, 0);
+    else if (id == 3)
+        preview = new IceCubesArmy(0, 0);
 
 	if (!preview)
 		return;

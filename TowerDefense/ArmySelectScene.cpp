@@ -17,7 +17,7 @@
 void ArmySelectScene::Initialize() {
     // parameter initialization
     // TODO 2 (1/8): modify the totalArmy amount.
-    totalArmy = 3;
+    totalArmy = 4;
     
     // Space status background
     AddNewObject(new Engine::Image("play/sand.png", 1250, 0, 336, 896));
@@ -37,12 +37,14 @@ void ArmySelectScene::Initialize() {
     }
     fromSetting = false;
     armyAmount[0] = 4;
+    armyAmount[3] = 2;
     
     // set ArmyImage
     ArmyImage[0] = "play/warrior.png";
     // TODO 2 (2/8): Create the bomb image. You can find image in the play/ folder.
     ArmyImage[1] = "play/bombs.png";
     ArmyImage[2] = "play/enemy-4.png";
+    ArmyImage[3] = "play/ice-cubes.png";
 
     // Add new enemy
     for (int i=0; i<totalArmy; i++) {
@@ -98,6 +100,8 @@ void ArmySelectScene::PlayOnClick(ButtonType type, int id, int spaceCost) {
     else if (type == BUTTON_RESET) {
         // TODO 1 (8/8): Reset the usedSpace and the amount of every army to 0.
         for (int i = 0; i < totalArmy; i++) {
+            if (i == 3) // skip ice cubes 
+                continue;
             ArmySelectScene::armyAmount[i] = 0;
             ArmySelectScene::UIArmyAmount[i]->Text = std::to_string(armyAmount[i]);
             ArmySelectScene::UIArmyAmount[i]->Draw();
@@ -142,6 +146,9 @@ void ArmySelectScene::PlayOnClick(ButtonType type, int id, int spaceCost) {
     }
 }
 void ArmySelectScene::AddNewArmy(int id, std::string imageName, int spaceCost) {
+    //if (id == 3) // skip ice cubes 
+        //return;
+
     int w = Engine::GameEngine::GetInstance().GetScreenSize().x;
     int h = Engine::GameEngine::GetInstance().GetScreenSize().y;
     int halfW = w / 2;
@@ -159,9 +166,13 @@ void ArmySelectScene::AddNewArmy(int id, std::string imageName, int spaceCost) {
     // Army image
     AddNewObject(new Engine::Image(imageName, halfW / 4 + offsetW, oneThirdH - 175 + offsetH, 175, 175));
    
+    if (id == 3) // skip ice cubes 
+        return;
+
     // TODO 1 (3/8): Create the add(+) button. You can imitate the enter button construction in the Initialize() function.
     // Suggestion of ImageButton's position setting: x(halfW / 4 + offsetW), y(oneThirdH + 25 + offsetH), w(75), h(50).
     // Suggestion of Label position settings: x(halfW / 4 + 35 + offsetW), y(oneThirdH + 50 + offsetH).
+
     btn = new Engine::ImageButton("stage-select/dirt.png", "stage-select/floor.png", halfW / 4 + offsetW, oneThirdH + 25 + offsetH, 75, 50);
     btn->SetOnClickCallback(std::bind(&ArmySelectScene::PlayOnClick, this, BUTTON_ADD, id, spaceCost));
     AddNewControlObject(btn);

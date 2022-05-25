@@ -27,3 +27,4 @@ void ArcherArmy::CreateBullet(Engine::Point pt) {
     getPlayScene()->BulletGroup->AddNewObject(new ArcherBullet(Position, diff, rotation, this));
     AudioHelper::PlayAudio("missile.wav");
 }
+
