@@ -14,4 +14,9 @@ public:
     explicit CannonBullet(Engine::Point position, Engine::Point forwardDirection, float rotation, Defense* parent);
 };
 
+class TurretBullet : public Bullet {
+public:
+    explicit TurretBullet(Engine::Point position, Engine::Point forwardDirection, float rotation, Defense* parent);
+};
+
 #endif /* CannonBullet_hpp */

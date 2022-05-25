@@ -27,3 +27,20 @@ void CannonDefense::CreateBullet(Engine::Point pt) {
     getPlayScene()->BulletGroup->AddNewObject(new CannonBullet(Position , diff, rotation, this));
     AudioHelper::PlayAudio("gun.wav");
 }
+
+TurretDefense::TurretDefense(float x, float y) :
+    Defense("play/turret-1.png", x, y, 20, 0.6, 50, 2, 500) {
+    // Move center downward, since we the turret head is slightly biased upward.
+    Anchor.y += 8.0f / GetBitmapHeight();
+}
+
+void TurretDefense::CreateBullet(Engine::Point pt) {
+    int dx = pt.x - Position.x;
+    int dy = pt.y - Position.y;
+    double len = sqrt(pow(dx, 2) + pow(dy, 2));
+    Engine::Point diff = Engine::Point(dx / len, dy / len);
+    Engine::Point rotateDiff = Engine::Point(cos(Rotation - ALLEGRO_PI / 2), sin(Rotation - ALLEGRO_PI / 2));
+    float rotation = atan2(rotateDiff.y, rotateDiff.x) + ALLEGRO_PI / 2;
+    getPlayScene()->BulletGroup->AddNewObject(new TurretBullet(Position, diff, rotation, this));
+    AudioHelper::PlayAudio("laser.wav");
+}

@@ -40,10 +40,10 @@ namespace Engine {
 		}
 	}
 	void Group::Draw() const {
-		Engine::LOG() << objects.size();
 		for (auto& it : objects) {
-			if (it.second->Visible)
+			if (it.second->Visible) {
 				it.second->Draw(); // TODO 5
+			}
 		}
 	}
 	void Group::OnKeyDown(int keyCode) {

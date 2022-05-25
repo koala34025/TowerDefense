@@ -129,15 +129,15 @@ void PlayScene::Update(float deltaTime) {
     if (!ArmyGroup->GetObjects().empty()) armyEmpty = false;
     if (armyEmpty) {
         // Release the resources
-        //delete TileMapGroup;
-        //delete GroundEffectGroup;
-        //delete DebugIndicatorGroup;
-        //delete BulletGroup;
-        //delete DefenseGroup;
-        //delete WallGroup;
-        //delete ArmyGroup;
-        //delete EffectGroup;
-        //delete UIGroup;
+        /*delete TileMapGroup;
+        delete GroundEffectGroup;
+        delete DebugIndicatorGroup;
+        delete BulletGroup;
+        delete DefenseGroup;
+        delete WallGroup;
+        delete ArmyGroup;
+        delete EffectGroup;
+        delete UIGroup;*/
         Engine::GameEngine::GetInstance().ChangeScene("lose");
     }
     
@@ -297,6 +297,7 @@ void PlayScene::ReadMap() {
 		case '0': mapData.push_back(TILE_FLOOR); break;
 		case '1': mapData.push_back(TILE_WALL); break;
         case '2': mapData.push_back(TILE_CANNON); break;
+        case '3': mapData.push_back(TILE_TURRET); break;
 		case '\n':
 		case '\r':
 			if (static_cast<int>(mapData.size()) / MapWidth != 0)
@@ -327,6 +328,9 @@ void PlayScene::ReadMap() {
                     break;
                 case TILE_CANNON:
                     DefenseGroup->AddNewObject(new CannonDefense(j * BlockSize + BlockSize / 2, i * BlockSize + BlockSize / 2));
+                    break;
+                case TILE_TURRET:
+                    DefenseGroup->AddNewObject(new TurretDefense(j * BlockSize + BlockSize / 2, i * BlockSize + BlockSize / 2));
                     break;
                 case TILE_FLOOR:
                     if (j <= MapWidth-2 && j >= 2) {
@@ -399,7 +403,8 @@ bool PlayScene::CheckOccupied(int x, int y) {
     
     TileType tt = mapState[y][x];
     if (tt == TILE_WALL || tt == TILE_CANNON) return true;
-    
+    if (tt == TILE_CANNON) return true;
+
     if (x >= corners[0].x && x <= corners[1].x
         && y >= corners[0].y && y <= corners[2].y
         ) return true;

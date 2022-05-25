@@ -14,3 +14,7 @@ class Defense;
 CannonBullet::CannonBullet(Engine::Point position, Engine::Point forwardDirection, float rotation, Defense* parent) :
     Bullet("play/bullet-9.png", 500, 5, position, forwardDirection, rotation, parent) {
 }
+
+TurretBullet::TurretBullet(Engine::Point position, Engine::Point forwardDirection, float rotation, Defense* parent) :
+    Bullet("play/bullet-1.png", 500, 2, position, forwardDirection, rotation, parent) {
+}

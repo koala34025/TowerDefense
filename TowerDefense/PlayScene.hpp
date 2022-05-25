@@ -30,6 +30,7 @@ private:
         TILE_WALL,
         TILE_CANNON,
 		TILE_OCCUPIED,
+		TILE_TURRET
 	};
 	ALLEGRO_SAMPLE_ID bgmId;
 	std::shared_ptr<ALLEGRO_SAMPLE_INSTANCE> deathBGMInstance;
