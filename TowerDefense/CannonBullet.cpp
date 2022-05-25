@@ -16,5 +16,5 @@ CannonBullet::CannonBullet(Engine::Point position, Engine::Point forwardDirectio
 }
 
 TurretBullet::TurretBullet(Engine::Point position, Engine::Point forwardDirection, float rotation, Defense* parent) :
-    Bullet("play/bullet-1.png", 500, 2, position, forwardDirection, rotation, parent) {
+    Bullet("play/bullet-1.png", 500, 1, position, forwardDirection, rotation, parent) {
 }

@@ -29,7 +29,7 @@ void CannonDefense::CreateBullet(Engine::Point pt) {
 }
 
 TurretDefense::TurretDefense(float x, float y) :
-    Defense("play/turret-1.png", x, y, 20, 0.6, 50, 2, 500) {
+    Defense("play/turret-1.png", x, y, 20, 0.6, 50, 3, 500) {
     // Move center downward, since we the turret head is slightly biased upward.
     Anchor.y += 8.0f / GetBitmapHeight();
 }

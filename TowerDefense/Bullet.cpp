@@ -8,6 +8,7 @@
 #include "PlayScene.hpp"
 #include "Point.hpp"
 #include "Sprite.hpp"
+#include "Defense.hpp"
 
 PlayScene* Bullet::getPlayScene() {
 	return dynamic_cast<PlayScene*>(Engine::GameEngine::GetInstance().GetActiveScene());
@@ -41,6 +42,9 @@ void Bullet::Update(float deltaTime) {
             continue;
         if (Engine::Collider::IsCircleOverlap(Position, CollisionRadius, army->Position, army->CollisionRadius)) {
             army->Hit(damage);
+            if (defenseParent->id == 3) {
+                army->speed = 30;
+            }
             getPlayScene()->BulletGroup->RemoveObject(objectIterator);
             return;
         }

@@ -15,13 +15,14 @@ class Defense;
 class Army : public Role {
 protected:
     Engine::Point target_tmp;
-    float speed;
+   
     float coolDown = 1;
     float reload = 0;
     float rotateRadian = 2 * ALLEGRO_PI;
     float shootRadius;
     std::list<Army*>::iterator lockedArmyIterator;
 public:
+    float speed;
     int id;
     bool isPreview = true;
     bool Enabled = true;

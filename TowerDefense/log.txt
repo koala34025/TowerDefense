@@ -47,16 +47,6 @@
 [INFO] Loaded Resource<audio>: resources/audios/laser.wav
 [INFO] Loaded Resource<image>: resources/images/play/bullet-9.png scaled to 64x64
 [INFO] Loaded Resource<audio>: resources/audios/gun.wav
-[INFO] Loaded Resource<image>: resources/images/play/explosion-1.png scaled to 64x64
-[INFO] Loaded Resource<image>: resources/images/play/explosion-1.png
-[INFO] Loaded Resource<image>: resources/images/play/explosion-2.png
-[INFO] Loaded Resource<image>: resources/images/play/explosion-3.png
-[INFO] Loaded Resource<image>: resources/images/play/explosion-4.png
-[INFO] Loaded Resource<image>: resources/images/play/explosion-5.png
-[INFO] Loaded Resource<image>: resources/images/play/dirty-2.png scaled to 64x64
-[INFO] Loaded Resource<image>: resources/images/play/dirty-1.png scaled to 64x64
-[INFO] Loaded Resource<image>: resources/images/play/dirty-3.png scaled to 64x64
-[INFO] Loaded Resource<audio>: resources/audios/explosion.wav
 [INFO] Loaded Resource<image>: resources/images/play/sword.png scaled to 64x64
 [INFO] Loaded Resource<audio>: resources/audios/missile.wav
 [INFO] Loaded Resource<image>: resources/images/play/shoot-1.png scaled to 64x64
@@ -64,6 +54,16 @@
 [INFO] Loaded Resource<image>: resources/images/play/shoot-2.png
 [INFO] Loaded Resource<image>: resources/images/play/shoot-3.png
 [INFO] Loaded Resource<image>: resources/images/play/shoot-4.png
+[INFO] Loaded Resource<image>: resources/images/play/explosion-1.png scaled to 64x64
+[INFO] Loaded Resource<image>: resources/images/play/explosion-1.png
+[INFO] Loaded Resource<image>: resources/images/play/explosion-2.png
+[INFO] Loaded Resource<image>: resources/images/play/explosion-3.png
+[INFO] Loaded Resource<image>: resources/images/play/explosion-4.png
+[INFO] Loaded Resource<image>: resources/images/play/explosion-5.png
+[INFO] Loaded Resource<image>: resources/images/play/dirty-1.png scaled to 64x64
+[INFO] Loaded Resource<image>: resources/images/play/dirty-3.png scaled to 64x64
+[INFO] Loaded Resource<audio>: resources/audios/explosion.wav
+[INFO] Loaded Resource<image>: resources/images/play/dirty-2.png scaled to 64x64
 [INFO] Game Terminating...
 [INFO] stopped audio (sample)
 [INFO] Game terminated
@@ -101,14 +101,14 @@
 [INFO] Destroyed Resource<image>: play/sword.png?64x64
 [INFO] Destroyed Resource<image>: play/target.png?64x64
 [INFO] Destroyed Resource<image>: play/bullet-1.png?64x64
-[INFO] Destroyed Resource<image>: play/shoot-4.png
-[INFO] Destroyed Resource<image>: play/explosion-1.png?64x64
-[INFO] Destroyed Resource<image>: play/explosion-1.png
-[INFO] Destroyed Resource<image>: play/dirty-1.png?64x64
-[INFO] Destroyed Resource<image>: play/dirty-3.png?64x64
 [INFO] Destroyed Resource<image>: play/shoot-1.png
 [INFO] Destroyed Resource<image>: play/shoot-2.png
 [INFO] Destroyed Resource<image>: play/shoot-3.png
+[INFO] Destroyed Resource<image>: play/explosion-1.png?64x64
+[INFO] Destroyed Resource<image>: play/shoot-4.png
+[INFO] Destroyed Resource<image>: play/explosion-1.png
+[INFO] Destroyed Resource<image>: play/dirty-1.png?64x64
+[INFO] Destroyed Resource<image>: play/dirty-3.png?64x64
 [INFO] Destroyed Resource<font>: pirulen.ttf?48
 [INFO] Destroyed Resource<font>: pirulen.ttf?108
 [INFO] Destroyed Resource<font>: pirulen.ttf?30
@@ -121,5 +121,5 @@
 [INFO] Destroyed Resource<audio>: gun.wav
 [INFO] Destroyed Resource<audio>: astronomia.ogg
 [INFO] Destroyed Resource<audio>: play.ogg
-[INFO] Destroyed Resource<audio>: explosion.wav
 [INFO] Destroyed Resource<audio>: missile.wav
+[INFO] Destroyed Resource<audio>: explosion.wav

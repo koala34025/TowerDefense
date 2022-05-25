@@ -284,6 +284,7 @@ void Army::Update(float deltaTime) {
             }
         }
     }
+
     Velocity = Velocity * speed;
     Position.x += Velocity.x * deltaTime;
     Position.y += Velocity.y * deltaTime;
