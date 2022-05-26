@@ -14,8 +14,6 @@
 #include "Defense.hpp"
 #include "LOG.hpp"
 
-extern ALLEGRO_TIMER* freeze_timer;
-
 Defense::Defense(std::string imgDefense, float x, float y, float radius, float coolDown, int hp, int id, float shootRadius) :
     Role(imgDefense, x, y), coolDown(coolDown), id(id), shootRadius(shootRadius) {
     CollisionRadius = radius;
@@ -38,17 +36,7 @@ void Defense::Hit(float damage) {
 void Defense::Update(float deltaTime) {
     Sprite::Update(deltaTime);
     PlayScene* scene = getPlayScene();
-    if (!Enabled) {
-        // TODO : puase 2 sec
-        Engine::LOG() << id << " " << al_get_timer_count(freeze_timer);
-        if (al_get_timer_count(freeze_timer) > 120) {
-            for (auto& it : scene->DefenseGroup->GetObjects()) {
-                Defense* tgt = dynamic_cast<Defense*>(it);
-                tgt->Enabled = true;
-            }
-            al_stop_timer(freeze_timer);
-            al_set_timer_count(freeze_timer, 0);
-        }
+    if (!Enabled) {        
         return;
     }
 

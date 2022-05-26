@@ -15,8 +15,6 @@
 #include "LOG.hpp"
 #include "ArcherBullet.hpp"
 
-extern ALLEGRO_TIMER* freeze_timer;
-
 //Army(std::string img, float x, float y, float radius, float coolDown, float speed, float hp, int id, float shootRadius);
 BombArmy::BombArmy(float x, float y) :
     Army("play/bombs.png", x, y, 20, 0, 80, 15, 1, 0) {
@@ -163,31 +161,18 @@ void IceCubesArmy::Update(float deltaTime) {
 
     reload = coolDown;
 
-    for (auto& it : lockedDefenses)
+    for (auto& it : lockedDefenses) {
         it->Target = nullptr;
-
-    int x = static_cast<int>(floor(Position.x / PlayScene::BlockSize));
-    int y = static_cast<int>(floor(Position.y / PlayScene::BlockSize));
-    Engine::LOG() << x << " " << y;
-
-    for (auto& it : scene->DefenseGroup->GetObjects()) {
-        int xx = static_cast<int>(floor(it->Position.x / PlayScene::BlockSize));
-        int yy = static_cast<int>(floor(it->Position.y / PlayScene::BlockSize));
-        Engine::LOG() << xx << " " << yy;
-
-        if (abs(xx - x) <= 1 && abs(yy - y) <= 1) {
-            Engine::LOG() << "in";
-            
-            Defense* tgt = dynamic_cast<Defense*>(it);
-            tgt->Enabled = false;
-            al_start_timer(freeze_timer);
-        }
     }
 
-    // add frozen animation
+    // add frozen animation (as bullet)
     for (int dx = -1; dx <= 1; dx++) {
         for (int dy = -1; dy <= 1; dy++) {
-            
+            Engine::Point newpos = Position;
+            newpos.x += (double)dx * PlayScene::BlockSize;
+            newpos.y += (double)dy * PlayScene::BlockSize;
+            Engine::Point zero(0, 0);
+            getPlayScene()->BulletGroup->AddNewObject(new FrozenBullet(newpos, zero, 0, this));
         }
     }
 
