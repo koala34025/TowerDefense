@@ -17,7 +17,7 @@
 void ArmySelectScene::Initialize() {
     // parameter initialization
     // TODO 2 (1/8): modify the totalArmy amount.
-    totalArmy = 4;
+    totalArmy = 5;
     
     // Space status background
     AddNewObject(new Engine::Image("play/sand.png", 1250, 0, 336, 896));
@@ -36,6 +36,7 @@ void ArmySelectScene::Initialize() {
     }
     fromSetting = false;
     armyAmount[3] = 2;
+    armyAmount[4] = 1;
 
     // TODO 1 (2/8): Add the usedSpace and totalSpace to the label.
     AddNewObject(UISpaceUsage = new Engine::Label("Space: " + std::to_string(usedSpace) + "/" + std::to_string(totalSpace), "pirulen.ttf", 30, 1395, 150, 0, 0, 0, 255, 0.5, 0.5));
@@ -46,12 +47,10 @@ void ArmySelectScene::Initialize() {
     ArmyImage[1] = "play/bombs.png";
     ArmyImage[2] = "play/enemy-4.png";
     ArmyImage[3] = "play/ice-cubes.png";
+    ArmyImage[4] = "play/hero.png";
 
     // Add new enemy
     for (int i=0; i<totalArmy; i++) {
-        if (i == 3)
-            continue;
-
         AddNewArmy(i, ArmyImage[i], 1);
     }
     
@@ -104,7 +103,7 @@ void ArmySelectScene::PlayOnClick(ButtonType type, int id, int spaceCost) {
     else if (type == BUTTON_RESET) {
         // TODO 1 (8/8): Reset the usedSpace and the amount of every army to 0.
         for (int i = 0; i < totalArmy; i++) {
-            if (i == 3) // skip ice cubes 
+            if (i >= 3) // skip ice cubes 
                 continue;
             ArmySelectScene::armyAmount[i] = 0;
             ArmySelectScene::UIArmyAmount[i]->Text = std::to_string(armyAmount[i]);
@@ -150,7 +149,7 @@ void ArmySelectScene::PlayOnClick(ButtonType type, int id, int spaceCost) {
     }
 }
 void ArmySelectScene::AddNewArmy(int id, std::string imageName, int spaceCost) {
-    if (id == 3) // skip ice cubes 
+    if (id >= 3) // skip ice cubes 
         return;
 
     int w = Engine::GameEngine::GetInstance().GetScreenSize().x;
@@ -170,7 +169,7 @@ void ArmySelectScene::AddNewArmy(int id, std::string imageName, int spaceCost) {
     // Army image
     AddNewObject(new Engine::Image(imageName, halfW / 4 + offsetW, oneThirdH - 175 + offsetH, 175, 175));
    
-    if (id == 3) // skip ice cubes 
+    if (id >= 3) // skip ice cubes 
         return;
 
     // TODO 1 (3/8): Create the add(+) button. You can imitate the enter button construction in the Initialize() function.

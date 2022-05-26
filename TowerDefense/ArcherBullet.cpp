@@ -23,9 +23,7 @@ void ArcherBullet::OnExplode(Defense *defense) {
     getPlayScene()->EffectGroup->AddNewObject(new ShootEffect(defense->Position.x, defense->Position.y));
 }
 
-// end of archer bullet
-
-// start of frozen bullet
+//--------------------------------------------------------------------------------------------------------------------//
 
 FrozenBullet::FrozenBullet(Engine::Point position, Engine::Point forwardDirection, float rotation, Army* parent) :
     ArmyBullet("play/frozen.png", 0, 0, position, forwardDirection, rotation - ALLEGRO_PI / 2, parent) {
@@ -64,4 +62,15 @@ void FrozenBullet::Update(float deltaTime) {
     // Check if out of boundary.
     if (Position.x < 0 || Position.x > PlayScene::GetClientSize().x || Position.y < 0 || Position.y > PlayScene::GetClientSize().y)
         getPlayScene()->BulletGroup->RemoveObject(objectIterator);
+}
+
+//--------------------------------------------------------------------------------------------------------------------//
+
+HeroBullet::HeroBullet(Engine::Point position, Engine::Point forwardDirection, float rotation, Army* parent, int isPower) :
+    ArmyBullet("play/spiderweb.png", 40, 5 + (5 * isPower), position, forwardDirection, rotation - ALLEGRO_PI / 2, parent) {
+}
+
+void HeroBullet::OnExplode(Defense* defense) {
+    // TODO 3 (1/2): Add a ShootEffect here. Remember you need to include the class.
+    getPlayScene()->EffectGroup->AddNewObject(new ShootEffect(defense->Position.x, defense->Position.y));
 }

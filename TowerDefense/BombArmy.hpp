@@ -26,4 +26,11 @@ public:
     void CreateBullet(Engine::Point pt) override;
     void Hit(float damage) override;
 };
+
+class HeroArmy : public Army {
+public:
+    HeroArmy(float x, float y);
+    void CreateBullet(Engine::Point pt) override;
+    void Update(float deltaTime) override;
+};
 #endif /* BombArmy_hpp */

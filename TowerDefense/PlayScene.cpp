@@ -53,6 +53,7 @@ const float PlayScene::DangerTime = 7.61;
 
 ALLEGRO_TIMER* countdown_timer;
 ALLEGRO_EVENT_QUEUE* countdown_queue;
+extern ALLEGRO_TIMER* power_timer;
 
 // TODO 4 (2/3): Set the code sequence correctly.
 const std::vector<int> PlayScene::code = {
@@ -89,7 +90,7 @@ void PlayScene::Initialize() {
     AddNewObject(GroundEffectGroup = new Group());
 	AddNewObject(EffectGroup = new Group());
     AddNewObject(countdown_label = new Engine::Label("Time Left: " + std::to_string(GAMETIME -al_get_timer_count(countdown_timer)), "pirulen.ttf", 30, 150, 30, 0, 0, 0, 255, 0.5, 0.5));
-
+    AddNewObject(new Engine::Label("[T]: Speed Up The Hero", "pirulen.ttf", 20, 1360, 750, 0, 0, 0, 255, 0.5, 0.5));
 	// Should support buttons.
 	AddNewControlObject(UIGroup = new Group());
 	ReadMap();
@@ -229,6 +230,8 @@ void PlayScene::OnMouseUp(int button, int mx, int my) {
                     preview = new Enemy4Army(0, 0);
                 else if (remainId == 3)
                     preview = new IceCubesArmy(0, 0);
+                else if (remainId == 4)
+                    preview = new HeroArmy(0, 0);
 
                 preview->Position = Engine::GameEngine::GetInstance().GetMousePosition();
                 preview->Tint = al_map_rgba(255, 255, 255, 200);
@@ -296,6 +299,16 @@ void PlayScene::OnKeyDown(int keyCode) {
 		// Hotkey for Speed up.
 		SpeedMult = keyCode - ALLEGRO_KEY_0;
 	}
+    else if (keyCode == ALLEGRO_KEY_T) {
+        Engine::LOG() << "HERE";
+        if (!power_timer)
+            return;
+        if (al_get_timer_count(power_timer) > 0)
+            return;
+
+        Engine::LOG() << "HERE2";
+        al_start_timer(power_timer);
+    }
 }
 
 void PlayScene::ReduceAmount(int id) {
@@ -383,10 +396,11 @@ void PlayScene::ConstructUI() {
     ConstructButton(1, ArmyImage[1]);
     ConstructButton(2, ArmyImage[2]);
     ConstructButton(3, ArmyImage[3]);
+    ConstructButton(4, ArmyImage[4]);
 }
 void PlayScene::ConstructButton(int id, std::string imageName) {
-    int posid = id; // adjust ice cubes 
-    if (id == 3) 
+    int posid = id; // adjust ice cubes and hero
+    if (id >= 3) 
         posid += 5;
 
     ArmyButton* btn;
@@ -418,6 +432,8 @@ void PlayScene::UIBtnClicked(int id) {
         preview = new Enemy4Army(0, 0);
     else if (id == 3)
         preview = new IceCubesArmy(0, 0);
+    else if (id == 4)
+        preview = new HeroArmy(0, 0);
 
 	if (!preview)
 		return;

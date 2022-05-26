@@ -42,7 +42,7 @@ void Bullet::Update(float deltaTime) {
             continue;
         if (Engine::Collider::IsCircleOverlap(Position, CollisionRadius, army->Position, army->CollisionRadius)) {
             army->Hit(damage);
-            if (defenseParent->id == 3) {
+            if (defenseParent->id == 3 && army->id != 4) {
                 army->speed = 30;
             }
             getPlayScene()->BulletGroup->RemoveObject(objectIterator);

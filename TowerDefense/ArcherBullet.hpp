@@ -24,4 +24,10 @@ public:
     ALLEGRO_TIMER* freeze_timer;
     ALLEGRO_EVENT_QUEUE* queue;
 };
+
+class HeroBullet : public ArmyBullet {
+public:
+    explicit HeroBullet(Engine::Point position, Engine::Point forwardDirection, float rotation, Army* parent, int isPower);
+    void OnExplode(Defense* defense) override;
+};
 #endif /* ArcherBullet_hpp */
