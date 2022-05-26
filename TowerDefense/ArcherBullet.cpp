@@ -41,8 +41,6 @@ void FrozenBullet::Update(float deltaTime) {
     Sprite::Update(deltaTime);
     PlayScene* scene = getPlayScene();
 
-    // Can be improved by Spatial Hash, Quad Tree, ...
-    // However simply loop through all enemies is enough for this program.
     for (auto& it : scene->DefenseGroup->GetObjects()) {
         Defense* defense = dynamic_cast<Defense*>(it);
         if (Engine::Collider::IsCircleOverlap(Position, CollisionRadius, defense->Position, defense->CollisionRadius)) {

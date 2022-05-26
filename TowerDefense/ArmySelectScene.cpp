@@ -23,21 +23,22 @@ void ArmySelectScene::Initialize() {
     AddNewObject(new Engine::Image("play/sand.png", 1250, 0, 336, 896));
     
     // TODO 1 (1/8): Initialize the usedSpace and totalSpace.
-    ArmySelectScene::usedSpace = 4;
+    ArmySelectScene::usedSpace;
     ArmySelectScene::totalSpace = 5;
-
-    // TODO 1 (2/8): Add the usedSpace and totalSpace to the label.
-    AddNewObject(UISpaceUsage = new Engine::Label("Space: " + std::to_string(usedSpace) + "/" + std::to_string(totalSpace), "pirulen.ttf", 30, 1395, 150, 0, 0, 0, 255, 0.5, 0.5));
 
     // initialize armyAmount
     if (!fromSetting) {
-        for (int i=0; i<totalArmy; i++) {
+        usedSpace = 4;
+        for (int i = 0; i < totalArmy; i++) {
             armyAmount[i] = 0;
         }
+        armyAmount[0] = 4;
     }
     fromSetting = false;
-    armyAmount[0] = 4;
     armyAmount[3] = 2;
+
+    // TODO 1 (2/8): Add the usedSpace and totalSpace to the label.
+    AddNewObject(UISpaceUsage = new Engine::Label("Space: " + std::to_string(usedSpace) + "/" + std::to_string(totalSpace), "pirulen.ttf", 30, 1395, 150, 0, 0, 0, 255, 0.5, 0.5));
     
     // set ArmyImage
     ArmyImage[0] = "play/warrior.png";
@@ -48,6 +49,9 @@ void ArmySelectScene::Initialize() {
 
     // Add new enemy
     for (int i=0; i<totalArmy; i++) {
+        if (i == 3)
+            continue;
+
         AddNewArmy(i, ArmyImage[i], 1);
     }
     
@@ -146,8 +150,8 @@ void ArmySelectScene::PlayOnClick(ButtonType type, int id, int spaceCost) {
     }
 }
 void ArmySelectScene::AddNewArmy(int id, std::string imageName, int spaceCost) {
-    //if (id == 3) // skip ice cubes 
-        //return;
+    if (id == 3) // skip ice cubes 
+        return;
 
     int w = Engine::GameEngine::GetInstance().GetScreenSize().x;
     int h = Engine::GameEngine::GetInstance().GetScreenSize().y;

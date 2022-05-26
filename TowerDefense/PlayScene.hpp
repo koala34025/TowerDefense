@@ -30,7 +30,8 @@ private:
         TILE_WALL,
         TILE_CANNON,
 		TILE_OCCUPIED,
-		TILE_TURRET
+		TILE_TURRET,
+		TILE_TRAP
 	};
 	ALLEGRO_SAMPLE_ID bgmId;
 	std::shared_ptr<ALLEGRO_SAMPLE_INSTANCE> deathBGMInstance;
@@ -61,6 +62,7 @@ public:
 	Group* BulletGroup;
     Group* DefenseGroup;
     Group* WallGroup;
+	Group* TrapGroup;
     Group* ArmyGroup;
 	Group* EffectGroup;
 	Group* UIGroup;

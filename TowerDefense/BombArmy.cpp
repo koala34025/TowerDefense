@@ -137,6 +137,7 @@ void Enemy4Army::CreateBullet(Engine::Point pt) {}
 void Enemy4Army::Hit(float damage) {
     HP -= damage;
     if (HP <= 0) {
+        OnExplode();
         // Remove all Defense's reference to target.
         for (auto& it : lockedDefenses)
             it->Target = nullptr;

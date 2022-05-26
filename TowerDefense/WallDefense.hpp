@@ -12,4 +12,12 @@ public:
     void UpdateBrokenWall();
 };
 
+class TrapDefense : public Defense {
+public:
+    TrapDefense(float x, float y);
+    void CreateBullet(Engine::Point pt) override;
+    void Update(float deltaTime) override;
+    void Draw() const override;
+};
+
 #endif /* WallDefense_hpp */

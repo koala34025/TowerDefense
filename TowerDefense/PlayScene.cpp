@@ -73,6 +73,7 @@ void PlayScene::Initialize() {
 	AddNewObject(TileMapGroup = new Group());
     AddNewObject(ArmyGroup = new Group());
     AddNewObject(WallGroup = new Group());
+    AddNewObject(TrapGroup = new Group());
     AddNewObject(DefenseGroup = new Group());
 	AddNewObject(DebugIndicatorGroup = new Group());
 	AddNewObject(BulletGroup = new Group());
@@ -306,6 +307,7 @@ void PlayScene::ReadMap() {
 		case '1': mapData.push_back(TILE_WALL); break;
         case '2': mapData.push_back(TILE_CANNON); break;
         case '3': mapData.push_back(TILE_TURRET); break;
+        case '4': mapData.push_back(TILE_TRAP); break;
 		case '\n':
 		case '\r':
 			if (static_cast<int>(mapData.size()) / MapWidth != 0)
@@ -339,6 +341,9 @@ void PlayScene::ReadMap() {
                     break;
                 case TILE_TURRET:
                     DefenseGroup->AddNewObject(new TurretDefense(j * BlockSize + BlockSize / 2, i * BlockSize + BlockSize / 2));
+                    break;
+                case TILE_TRAP:
+                    TrapGroup->AddNewObject(new TrapDefense(j * BlockSize + BlockSize / 2, i * BlockSize + BlockSize / 2));
                     break;
                 case TILE_FLOOR:
                     if (j <= MapWidth-2 && j >= 2) {
