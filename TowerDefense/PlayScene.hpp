@@ -43,6 +43,7 @@ protected:
     // Total enemies;
     int totalArmy;
 public:
+	Engine::Label* countdown_label;
     bool mute;
 	static bool DebugMode;
 	static const std::vector<Engine::Point> directions;

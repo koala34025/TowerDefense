@@ -41,6 +41,7 @@
 #define DOWN 3
 #define WALL_SIZE 4
 #define MAX_ARMY_AMOUNT 6
+#define GAMETIME 60
 
 // TODO 2 (4/8) : Add the BombArmy when click the imageButton and place it. You can search for the ArcherArmy to know where to add.
 
@@ -49,6 +50,9 @@ const std::vector<Engine::Point> PlayScene::directions = { Engine::Point(-1, 0),
 const int PlayScene::MapWidth = 24, PlayScene::MapHeight = 12;//50;//13;
 const int PlayScene::BlockSize = 64;
 const float PlayScene::DangerTime = 7.61;
+
+ALLEGRO_TIMER* countdown_timer;
+ALLEGRO_EVENT_QUEUE* countdown_queue;
 
 // TODO 4 (2/3): Set the code sequence correctly.
 const std::vector<int> PlayScene::code = {
@@ -59,6 +63,11 @@ Engine::Point PlayScene::GetClientSize() {
 	return Engine::Point(MapWidth * BlockSize, MapHeight * BlockSize);
 }
 void PlayScene::Initialize() {
+    countdown_timer = al_create_timer(1.0);
+    countdown_queue = al_create_event_queue();
+    al_register_event_source(countdown_queue, al_get_timer_event_source(countdown_timer));
+    al_start_timer(countdown_timer);
+
     for (int i = 0; i < WALL_SIZE; i++) {
         brokenWall[i].clear();
     }
@@ -79,7 +88,8 @@ void PlayScene::Initialize() {
 	AddNewObject(BulletGroup = new Group());
     AddNewObject(GroundEffectGroup = new Group());
 	AddNewObject(EffectGroup = new Group());
-    
+    AddNewObject(countdown_label = new Engine::Label("Time Left: " + std::to_string(GAMETIME -al_get_timer_count(countdown_timer)), "pirulen.ttf", 30, 150, 30, 0, 0, 0, 255, 0.5, 0.5));
+
 	// Should support buttons.
 	AddNewControlObject(UIGroup = new Group());
 	ReadMap();
@@ -98,6 +108,8 @@ void PlayScene::Initialize() {
         bgmInstance = AudioHelper::PlaySample("play.ogg", true, 0.0);
 }
 void PlayScene::Terminate() {
+    al_destroy_timer(countdown_timer);
+    al_destroy_event_queue(countdown_queue);
     AudioHelper::StopSample(bgmInstance);
     bgmInstance = std::shared_ptr<ALLEGRO_SAMPLE_INSTANCE>();
 	AudioHelper::StopSample(deathBGMInstance);
@@ -131,17 +143,15 @@ void PlayScene::Update(float deltaTime) {
         }
     }
     if (!ArmyGroup->GetObjects().empty()) armyEmpty = false;
+
+    countdown_label->Text = "Time Left: " + std::to_string(GAMETIME - al_get_timer_count(countdown_timer));
+    countdown_label->Draw();
+
+    if (al_get_timer_count(countdown_timer) >= GAMETIME) {
+        armyEmpty = true;
+    }
+
     if (armyEmpty) {
-        // Release the resources
-        /*delete TileMapGroup;
-        delete GroundEffectGroup;
-        delete DebugIndicatorGroup;
-        delete BulletGroup;
-        delete DefenseGroup;
-        delete WallGroup;
-        delete ArmyGroup;
-        delete EffectGroup;
-        delete UIGroup;*/
         Engine::GameEngine::GetInstance().ChangeScene("lose");
     }
     
