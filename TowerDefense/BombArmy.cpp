@@ -473,3 +473,17 @@ void HeroArmy::Update(float deltaTime) {
         al_set_timer_count(power_timer, 0);
     }
 }
+
+void HeroArmy::Hit(float damage) {
+    HP -= damage;
+    if (HP <= 0) {
+        OnExplode();
+        // Remove all Defense's reference to target.
+        for (auto& it : lockedDefenses)
+            it->Target = nullptr;
+        al_destroy_timer(power_timer);
+        al_destroy_event_queue(power_queue);
+        getPlayScene()->ArmyGroup->RemoveObject(objectIterator);
+        AudioHelper::PlayAudio("explosion.wav");
+    }
+}
